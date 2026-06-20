@@ -6,7 +6,7 @@ import '../styles/notes.css';
 
 const Archive = () => {
   const { notes } = useContext(NoteContext);
-  const archivedNotes = (notes || []).filter((note) => note.archived);
+  const archivedNotes = (notes || []).filter((note) => note.archived && !note.trashed);
 
   return (
     <div>

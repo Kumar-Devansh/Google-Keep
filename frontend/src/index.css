@@ -394,6 +394,12 @@ body::after {
   color: #0a0d1a;
 }
 
+.note-card button.edit:hover {
+  background: #4F46E5;
+  border-color: #4F46E5;
+  color: white;
+}
+
 /* pin indicator */
 .note-card.pinned {
   border-color: rgba(255, 138, 101, 0.5);

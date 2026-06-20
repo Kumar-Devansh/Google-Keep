@@ -14,21 +14,24 @@ const EditNoteModal = ({ note, onSave, onClose }) => {
   };
 
   return (
-    <div className="modal" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+    <div className="edit-modal" onClick={onClose}>
+      <div className="edit-modal-content" onClick={(e) => e.stopPropagation()}>
+        <h2>✏️ Edit Note</h2>
         <input
+          type="text"
           value={title}
-          placeholder="Title"
+          placeholder="Note Title"
           onChange={(e) => setTitle(e.target.value)}
+          autoFocus
         />
         <textarea
           value={content}
           placeholder="Take a note..."
           onChange={(e) => setContent(e.target.value)}
         />
-        <div>
-          <button onClick={submit}>Save</button>
-          <button onClick={onClose}>Cancel</button>
+        <div className="edit-modal-buttons">
+          <button className="cancel-btn" onClick={onClose}>Cancel</button>
+          <button className="save-btn" onClick={submit}>Save Changes</button>
         </div>
       </div>
     </div>

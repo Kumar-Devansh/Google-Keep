@@ -1,9 +1,18 @@
-import { useContext, useRef } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { NoteContext } from '../context/NoteContext';
+import EditNoteModal from './EditNoteModal';
 
 const NoteCard = ({ note }) => {
   const { editNote, removeNote } = useContext(NoteContext);
   const cardRef = useRef(null);
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  const handleEditSave = (updatedNote) => {
+    editNote(note._id, {
+      title: updatedNote.title,
+      content: updatedNote.content
+    });
+  };
 
   // 3D tilt-toward-cursor effect
   const handleMouseMove = (e) => {
@@ -40,6 +49,12 @@ const NoteCard = ({ note }) => {
       <p>{note.content}</p>
       <div>
         <button
+          className="edit"
+          onClick={() => setShowEditModal(true)}
+        >
+          ✏️ Edit
+        </button>
+        <button
           onClick={() =>
             editNote(note._id, {
               pinned: !note.pinned
@@ -58,10 +73,21 @@ const NoteCard = ({ note }) => {
         >
           {note.archived ? 'Unarchive' : 'Archive'}
         </button>
-        <button className="delete" onClick={() => removeNote(note._id)}>
-          Delete
+        <button className="delete" onClick={() =>
+            editNote(note._id, {
+              trashed: !note.trashed
+            })
+          }>
+          {note.trashed ? 'Restore' : 'Trash'}
         </button>
       </div>
+      {showEditModal && (
+        <EditNoteModal
+          note={note}
+          onSave={handleEditSave}
+          onClose={() => setShowEditModal(false)}
+        />
+      )}
     </div>
   );
 };

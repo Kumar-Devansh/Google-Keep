@@ -13,7 +13,7 @@ const Dashboard = () => {
   const { notes } = useContext(NoteContext);
   const [search, setSearch] = useState('');
 
-  const visibleNotes = (notes || []).filter((note) => !note.archived);
+  const visibleNotes = (notes || []).filter((note) => !note.archived && !note.trashed);
   const filteredNotes = visibleNotes.filter(
     (note) =>
       note.title.toLowerCase().includes(search.toLowerCase()) ||
