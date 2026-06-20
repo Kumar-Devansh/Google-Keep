@@ -6,6 +6,8 @@ import SearchBar from '../components/SearchBar';
 import CreateNote from '../components/CreateNote';
 import NoteCard from '../components/NoteCard';
 import { NoteContext } from '../context/NoteContext';
+import '../styles/dashboard.css';
+import '../styles/notes.css';
 
 const Dashboard = () => {
   const { notes } = useContext(NoteContext);

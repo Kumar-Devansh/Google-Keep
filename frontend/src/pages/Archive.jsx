@@ -1,6 +1,8 @@
 import { useContext } from 'react';
 import { NoteContext } from '../context/NoteContext';
 import NoteCard from '../components/NoteCard';
+import '../styles/dashboard.css';
+import '../styles/notes.css';
 
 const Archive = () => {
   const { notes } = useContext(NoteContext);
