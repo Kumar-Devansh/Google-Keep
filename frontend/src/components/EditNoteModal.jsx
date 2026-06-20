@@ -14,12 +14,22 @@ const EditNoteModal = ({ note, onSave, onClose }) => {
   };
 
   return (
-    <div className='modal'>
-      <div className='modal-content'>
-        <input value={title} onChange={(e) => setTitle(e.target.value)} />
-        <textarea value={content} onChange={(e) => setContent(e.target.value)} />
-        <button onClick={submit}>Save</button>
-        <button onClick={onClose}>Cancel</button>
+    <div className="modal" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <input
+          value={title}
+          placeholder="Title"
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <textarea
+          value={content}
+          placeholder="Take a note..."
+          onChange={(e) => setContent(e.target.value)}
+        />
+        <div>
+          <button onClick={submit}>Save</button>
+          <button onClick={onClose}>Cancel</button>
+        </div>
       </div>
     </div>
   );
