@@ -1,3 +1,6 @@
+import '../styles/dashboard.css';
+import '../styles/notes.css';
+
 const Trash = () => {
   return (
     <div>

@@ -1,0 +1,255 @@
+/* Note Card Colors */
+.note-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.note-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #4F46E5, #7C3AED);
+  transition: all 0.3s ease;
+}
+
+.note-card:hover::before {
+  height: 6px;
+}
+
+.note-card.color-ff6b6b {
+  background: #FFE5E5;
+  border-left-color: #EF4444;
+}
+
+.note-card.color-ff6b6b::before {
+  background: #EF4444;
+}
+
+.note-card.color-4ecdc4 {
+  background: #E0F9F8;
+  border-left-color: #14B8A6;
+}
+
+.note-card.color-4ecdc4::before {
+  background: #14B8A6;
+}
+
+.note-card.color-ffd93d {
+  background: #FFFAEB;
+  border-left-color: #FBBF24;
+}
+
+.note-card.color-ffd93d::before {
+  background: #FBBF24;
+}
+
+.note-card.color-6bcf7f {
+  background: #F0FDF4;
+  border-left-color: #22C55E;
+}
+
+.note-card.color-6bcf7f::before {
+  background: #22C55E;
+}
+
+.note-card.color-a78bfa {
+  background: #FAF5FF;
+  border-left-color: #A78BFA;
+}
+
+.note-card.color-a78bfa::before {
+  background: #A78BFA;
+}
+
+.note-card.color-4f46e5 {
+  background: #F0F4FF;
+  border-left-color: #4F46E5;
+}
+
+.note-card.color-4f46e5::before {
+  background: #4F46E5;
+}
+
+/* Edit Modal */
+.edit-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.edit-modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+
+.edit-modal-content h2 {
+  margin-bottom: 20px;
+  color: var(--text-dark);
+  font-size: 20px;
+}
+
+.edit-modal-content input,
+.edit-modal-content textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.edit-modal-content input:focus,
+.edit-modal-content textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.edit-modal-content textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.edit-modal-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.edit-modal-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.edit-modal-buttons .save-btn {
+  background: var(--primary);
+  color: white;
+}
+
+.edit-modal-buttons .save-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+.edit-modal-buttons .cancel-btn {
+  background: var(--border-color);
+  color: var(--text-dark);
+}
+
+.edit-modal-buttons .cancel-btn:hover {
+  background: #CBD5E1;
+}
+
+/* Loader */
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
+
+.loader-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--border-color);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Color Picker Styles */
+.color-picker-container {
+  margin: 15px 0;
+}
+
+.color-picker-label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: var(--text-dark);
+  font-size: 14px;
+}
+
+.color-picker {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.color-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.color-circle:hover {
+  transform: scale(1.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.color-circle.selected {
+  border-color: #1E293B;
+  box-shadow: 0 0 0 2px white, 0 0 0 4px #1E293B;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .edit-modal-content {
+    padding: 20px;
+  }
+
+  .edit-modal-buttons {
+    flex-direction: column;
+  }
+
+  .edit-modal-buttons button {
+    width: 100%;
+  }
+
+  .notes-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { loginUser } from "../api/authApi";
 import { useNavigate, Link } from "react-router-dom";
+import '../styles/auth.css';
 
 const Login = () => {
   const navigate = useNavigate();
