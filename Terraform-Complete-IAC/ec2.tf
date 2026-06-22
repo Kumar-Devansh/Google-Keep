@@ -32,6 +32,14 @@ resource "aws_security_group" "my_security_group" {
         description = "Allow HTTP access from anywhere"
     }
 
+    ingress{
+        from_port = 5000
+        to_port = 5000
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+        description = "Allow access to port 5000 from anywhere"
+    }
+
     ingress {
       from_port = 5173
       to_port = 5173
