@@ -3,10 +3,24 @@ import { getNotes, createNote, updateNote, deleteNote } from '../api/noteApi';
 
 export const NoteContext = createContext();
 
+const getStoredUser = () => {
+  try {
+    const stored = localStorage.getItem('user');
+    if (!stored) return null;
+    return JSON.parse(stored);
+  } catch {
+    localStorage.removeItem('user');
+    return null;
+  }
+};
+
 const NoteProvider = ({ children }) => {
   const [notes, setNotes] = useState([]);
 
   const fetchNotes = async () => {
+    const user = getStoredUser();
+    if (!user?.token) return;
+
     try {
       const res = await getNotes();
       setNotes(res.data);
