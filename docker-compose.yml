@@ -1,84 +1,63 @@
-version: '3.8'
-
 services:
-  # Backend API Service
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: google-keep-backend
-    ports:
-      - "5000:5000"
-    environment:
-      - NODE_ENV=${NODE_ENV:-production}
-      - PORT=5000
-      - MONGO_URI=${MONGO_URI}
-      - JWT_SECRET=${JWT_SECRET:-your-secret-key-change-in-production}
-      - CORS_ORIGIN=${CORS_ORIGIN:-http://localhost:3000}
-    networks:
-      - app-network
-    depends_on:
-      - mongodb
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "node", "-e", "require('http').get('http://localhost:5000', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"]
-      interval: 30s
-      timeout: 3s
-      retries: 3
-      start_period: 10s
 
-  # Frontend Service (Nginx)
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: google-keep-frontend
-    ports:
-      - "80:80"
-      - "443:443"
-    environment:
-      - REACT_APP_API_URL=${REACT_APP_API_URL:-http://localhost:5000}
-    networks:
-      - app-network
-    depends_on:
-      - backend
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
-      interval: 30s
-      timeout: 3s
-      retries: 3
-      start_period: 10s
-
-  # MongoDB Service (Optional - use MongoDB Atlas in production)
   mongodb:
-    image: mongo:7-alpine
+    image: mongo:7
     container_name: google-keep-mongodb
+
+    restart: always
+
     ports:
       - "27017:27017"
+
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USER:-admin}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD:-password}
-      - MONGO_INITDB_DATABASE=${MONGO_DB_NAME:-googlekeep}
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+
     volumes:
       - mongodb_data:/data/db
-      - mongodb_config:/data/configdb
-    networks:
-      - app-network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
-      interval: 30s
-      timeout: 3s
-      retries: 3
-      start_period: 5s
-    profiles:
-      - dev
 
-networks:
-  app-network:
-    driver: bridge
+    networks:
+      - keep-network
+
+  backend:
+    build: ./backend
+
+    container_name: google-keep-backend
+
+    restart: always
+
+    ports:
+      - "5000:5000"
+
+    environment:
+      PORT: 5000
+      JWT_SECRET: your_secret_key
+      MONGO_URI: mongodb://admin:password@mongodb:27017/googlekeep?authSource=admin
+
+    depends_on:
+      - mongodb
+
+    networks:
+      - keep-network
+
+  frontend:
+    build: ./frontend
+
+    container_name: google-keep-frontend
+
+    restart: always
+
+    ports:
+      - "80:80"
+
+    depends_on:
+      - backend
+
+    networks:
+      - keep-network
 
 volumes:
   mongodb_data:
-  mongodb_config:
+
+networks:
+  keep-network:
